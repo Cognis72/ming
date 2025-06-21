@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="admin.title">Admin Panel - PhotoGrid</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='3' y='3' width='18' height='18' rx='2' ry='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>">
+</head>
+<body class="light-theme admin-page">
+    <!-- Header -->
+    <header class="header admin-header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <svg class="logo" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21,15 16,10 5,21"/>
+                    </svg>
+                    <span class="brand-text" data-i18n="nav.brand">PhotoGrid</span>
+                </a>
+                <span class="admin-badge" data-i18n="admin.badge">Admin Panel</span>
+            </div>
+            
+            <div class="nav-controls">
+                <!-- Language Toggle -->
+                <div class="language-toggle">
+                    <button class="btn-icon" id="langToggle" aria-label="Toggle Language">
+                        <span class="lang-text">EN</span>
+                    </button>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <div class="theme-toggle">
+                    <button class="btn-icon" id="themeToggle" aria-label="Toggle Theme">
+                        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/>
+                            <line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Logout Button -->
+                <button class="btn-secondary" id="logoutBtn" data-i18n="admin.logout">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main admin-main">
+        <div class="container">
+            <div class="admin-layout">
+                <!-- Sidebar -->
+                <aside class="admin-sidebar">
+                    <nav class="admin-nav">
+                        <ul>
+                            <li><a href="#templates" class="nav-link active" data-i18n="admin.nav.templates">Templates</a></li>
+                            <li><a href="#settings" class="nav-link" data-i18n="admin.nav.settings">Settings</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Content Area -->
+                <div class="admin-content">
+                    <!-- Templates Section -->
+                    <section id="templatesSection" class="admin-section active">
+                        <div class="section-header">
+                            <h2 data-i18n="admin.templates.title">Manage Templates</h2>
+                            <button class="btn-primary" id="addTemplateBtn" data-i18n="admin.templates.add">Add Template</button>
+                        </div>
+
+                        <!-- Template Form -->
+                        <div class="template-form-container" id="templateFormContainer" style="display: none;">
+                            <form id="templateForm" class="template-form">
+                                <h3 id="formTitle" data-i18n="admin.templates.form.add">Add New Template</h3>
+                                
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="templateName" data-i18n="admin.templates.form.name">Template Name:</label>
+                                        <input type="text" id="templateName" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="templateDescription" data-i18n="admin.templates.form.description">Description:</label>
+                                        <textarea id="templateDescription" rows="3"></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="templateCategory" data-i18n="admin.templates.form.category">Category:</label>
+                                        <select id="templateCategory">
+                                            <option value="portrait">Portrait</option>
+                                            <option value="landscape">Landscape</option>
+                                            <option value="square">Square</option>
+                                            <option value="collage">Collage</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="templateImageUrl" data-i18n="admin.templates.form.image">Image URL:</label>
+                                        <input type="url" id="templateImageUrl" required>
+                                    </div>
+                                    
+                                    <div class="form-group full-width">
+                                        <label for="templateGrid" data-i18n="admin.templates.form.grid">Grid Configuration (CSS Grid):</label>
+                                        <textarea id="templateGrid" rows="4" placeholder="e.g., grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 200px);"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary" id="saveTemplateBtn" data-i18n="common.save">Save</button>
+                                    <button type="button" class="btn-secondary" id="cancelTemplateBtn" data-i18n="common.cancel">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Templates List -->
+                        <div class="templates-list">
+                            <div class="templates-grid" id="adminTemplatesGrid">
+                                <!-- Templates will be loaded here -->
+                            </div>
+                            
+                            <!-- Empty State -->
+                            <div class="empty-state" id="adminEmptyState">
+                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21,15 16,10 5,21"/>
+                                </svg>
+                                <h3 data-i18n="admin.templates.empty.title">No Templates Created</h3>
+                                <p data-i18n="admin.templates.empty.description">Start by adding your first photo template using the button above.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Settings Section -->
+                    <section id="settingsSection" class="admin-section" style="display: none;">
+                        <div class="section-header">
+                            <h2 data-i18n="admin.settings.title">Settings</h2>
+                        </div>
+                        
+                        <div class="settings-form">
+                            <div class="form-group">
+                                <label for="adminPasswordChange" data-i18n="admin.settings.password">Change Admin Password:</label>
+                                <input type="password" id="adminPasswordChange" placeholder="New password">
+                                <button class="btn-primary" id="changePasswordBtn" data-i18n="admin.settings.change">Change Password</button>
+                            </div>
+                            
+                            <div class="form-group">
+                                <h3 data-i18n="admin.settings.data">Data Management</h3>
+                                <div class="data-actions">
+                                    <button class="btn-secondary" id="exportDataBtn" data-i18n="admin.settings.export">Export Templates</button>
+                                    <button class="btn-warning" id="clearDataBtn" data-i18n="admin.settings.clear">Clear All Templates</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="admin.delete.title">Confirm Delete</h3>
+            </div>
+            <div class="modal-body">
+                <p data-i18n="admin.delete.message">Are you sure you want to delete this template? This action cannot be undone.</p>
+                <div class="form-actions">
+                    <button class="btn-danger" id="confirmDeleteBtn" data-i18n="admin.delete.confirm">Delete</button>
+                    <button class="btn-secondary" id="cancelDeleteBtn" data-i18n="common.cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/translations.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
